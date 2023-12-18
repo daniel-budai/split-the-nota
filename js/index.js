@@ -1,52 +1,49 @@
-//Dessa är alla variabler du behöver använda. 
-//De ska dock ligga i olika funktioner och inte nedanför.
-
-const tip;
-const sum;
-const numberOfFriends;
-const total;
-const friendSum;
-const sumDivided;
-const calculatedTip;
-const total;
-
-//Hämtar det som skrivits i inputfältet med ID tip
-document.getElementById('tip').value;
-
-function calculateTip(sum, tip) {}
-
-document.getElementById('calculateButton').addEventListener('click', function() {});
-
-//Hämtar det som skrivits i inputfältet med ID sum
-document.getElementById('sum').value;
-
-calculateTip(sum, tip);
-
-sum + calculatedTip;
-
-function divideTotal(total, numberOfFriends) {}
-
-document.getElementById('friendSum').innerHTML = sum + ' kr';
-
-//Returnerar värdet i variablen sumDivided i en funktion
-return sumDivided;
-
-showDividedSum(friendSum);
-
-document.getElementById('showSum').classList.toggle('hide');
-
-total / numberOfFriends;
-
-function showDividedSum(sum) {}
-
-document.getElementById('inputForm').classList.toggle('hide');
-
-sum * tip;
-
-//Returnerar värdet i variablen total i en funktion
-return total;
-
-divideTotal(total, numberOfFriends);
-
-//Hämtar det som skrivits i inputfältet med ID numberOfFriends
-document.getElementById('numberOfFriends').value;
+"use strict";
+function activate() {
+    const buttonElem = document.getElementById('calculateButton');
+    buttonElem && buttonElem.addEventListener('click', handleButtonClick);
+}
+/* region
+Funktion som lägger till och lyssnar på knapp. && om buttonElem är ett giltigt element,
+vilket i detta fall det är kommer addEventListener att köras. kallas för Kortslutningsutvärdering
+endregion*/
+/* region
+Allt i denna funktion hanterar när calculateButton klickas på.
+endregion*/
+function handleButtonClick() {
+    const tip = percentageInput('tip');
+    const sum = numberInput('sum');
+    const numberOfFriends = numberInput('numberOfFriends');
+    const calculatedTip = calculateTip(sum, tip);
+    const totalAmount = calculateTotalAmount(sum, calculatedTip);
+    const friendSum = calculateFriendSum(totalAmount, numberOfFriends);
+    showDividedSum(friendSum);
+}
+function percentageInput(id) {
+    const inputValue = numberInput(id);
+    return inputValue / 100.0;
+}
+function numberInput(id) {
+    const input = document.getElementById(id);
+    return input ? parseFloat(input.value) : 0;
+}
+function calculateTip(sum, tip) {
+    return sum * tip;
+}
+function calculateTotalAmount(sum, tip) {
+    return sum + tip;
+}
+function calculateFriendSum(total, numberOfFriends) {
+    return total / numberOfFriends;
+}
+function showDividedSum(sum) {
+    const showSumElem = document.getElementById('showSum');
+    const inputFormElem = document.getElementById('inputForm');
+    const friendSumElem = document.getElementById('friendSum');
+    if (showSumElem && inputFormElem && friendSumElem) {
+        showSumElem.classList.toggle('hide');
+        inputFormElem.classList.toggle('hide');
+        friendSumElem.innerHTML = `${sum} kr`;
+    }
+}
+activate();
